@@ -1,0 +1,95 @@
+:root {
+    /* Lighter, more modern background palette */
+    --bg: #1a1c23;
+    --head: #2d3343;
+    --accent: #00ff88;
+    --shadow: rgba(0, 0, 0, 0.4);
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    background: var(--bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1200px;
+}
+
+.glass-card {
+    position: relative;
+    width: 320px;
+    height: 400px;
+    transform-style: preserve-3d;
+    transition: transform 0.1s ease-out;
+}
+
+.layer {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    pointer-events: none;
+}
+
+/* Head with dynamic shadow */
+.head-bg {
+    background: var(--head);
+    transform: translateZ(0px);
+    box-shadow: 20px 20px 60px var(--shadow), -5px -5px 20px rgba(255,255,255,0.02);
+}
+
+/* Eyes Logic */
+.features-layer { transform: translateZ(60px); gap: 60px; }
+.eye {
+    width: 50px;
+    height: 50px;
+    background: white;
+    border-radius: 50%;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+}
+
+.pupil {
+    width: 20px;
+    height: 20px;
+    background: #000;
+    border-radius: 50%;
+    position: absolute;
+    top: 30%; left: 30%;
+}
+
+/* Mouth Logic */
+.mouth-layer { transform: translateZ(90px); }
+.mouth {
+    width: 60px;
+    height: 12px;
+    background: var(--accent);
+    border-radius: 20px;
+    margin-top: 120px;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* --- EMOTION STATES --- */
+
+/* Sad State */
+[data-emotion="sad"] .eye { height: 15px; border-radius: 10px; transform: translateY(10px); }
+[data-emotion="sad"] .mouth { width: 40px; border-radius: 50% 50% 0 0; transform: translateY(10px) rotate(10deg); background: #5a67d8; }
+
+/* Smile State */
+[data-emotion="smile"] .mouth { height: 30px; border-radius: 0 0 50px 50px; background: var(--accent); }
+[data-emotion="smile"] .eye { transform: scale(1.1); }
+
+/* Surprise State */
+[data-emotion="surprise"] .eye { transform: scale(1.4); }
+[data-emotion="surprise"] .mouth { width: 30px; height: 30px; border-radius: 50%; }
+
+.glass-overlay {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(4px);
+    transform: translateZ(110px);
+    border: 1px solid rgba(255,255,255,0.1);
+}
